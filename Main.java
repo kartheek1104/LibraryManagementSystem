@@ -42,10 +42,17 @@ public class Main {
                     deleteUser();
                     break;
                 case 9:
+                    issueBook();
+                    break;
+                case 10:
+                    returnBook();
+                    break;
+                case 11:
                     exit = true;
                     break;
                 default:
                     System.out.println("Invalid option, please try again.");
+                    break;
             }
         }
         System.out.println("Exiting system. Goodbye!");
@@ -61,7 +68,9 @@ public class Main {
         System.out.println("6. List Users");
         System.out.println("7. Update User");
         System.out.println("8. Delete User");
-        System.out.println("9. Exit");
+        System.out.println("9. Issue Book");
+        System.out.println("10. Return Book");
+        System.out.println("11. Exit");
         System.out.print("Choose an option: ");
     }
 
@@ -150,6 +159,30 @@ public class Main {
             System.out.println("User deleted successfully.");
         } else {
             System.out.println("User with ID " + id + " not found.");
+        }
+    }
+
+    private static void issueBook() {
+        System.out.print("Enter book ID to issue: ");
+        int bookId = Integer.parseInt(scanner.nextLine());
+        System.out.print("Enter user ID to issue to: ");
+        int userId = Integer.parseInt(scanner.nextLine());
+
+        if (manager.issueBook(bookId, userId)) {
+            System.out.println("Book issued successfully.");
+        } else {
+            System.out.println("Issue failed. Book might already be issued or IDs are invalid.");
+        }
+    }
+
+    private static void returnBook() {
+        System.out.print("Enter book ID to return: ");
+        int bookId = Integer.parseInt(scanner.nextLine());
+
+        if (manager.returnBook(bookId)) {
+            System.out.println("Book returned successfully.");
+        } else {
+            System.out.println("Return failed. Book may not be issued or ID is invalid.");
         }
     }
 }

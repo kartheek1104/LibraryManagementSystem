@@ -49,7 +49,8 @@ public class LibraryManager {
     private void saveBooks() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(BOOKS_FILE))) {
             for (Book b : books) {
-                writer.write(b.getId() + "," + b.getTitle() + "," + b.getAuthor());
+                writer.write(b.getId() + "," + b.getTitle() + "," + b.getAuthor() + "," +
+                             (b.isIssued() ? b.getIssuedToUserId() : -1));
                 writer.newLine();
             }
         } catch (IOException e) {
@@ -64,18 +65,46 @@ public class LibraryManager {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",", 3);
-                if (parts.length == 3) {
+                String[] parts = line.split(",", 4);
+                if (parts.length >= 3) {
                     int id = Integer.parseInt(parts[0]);
                     String title = parts[1];
                     String author = parts[2];
-                    books.add(new Book(id, title, author));
+                    int issuedTo = parts.length == 4 ? Integer.parseInt(parts[3]) : -1;
+
+                    Book book = new Book(id, title, author);
+                    if (issuedTo != -1) {
+                        book.issueTo(issuedTo);
+                    }
+                    books.add(book);
                     if (id >= bookIdCounter) bookIdCounter = id + 1;
                 }
             }
         } catch (IOException e) {
             System.out.println("Error loading books: " + e.getMessage());
         }
+    }
+
+    public boolean issueBook(int bookId, int userId) {
+        for (Book b : books) {
+            if (b.getId() == bookId && !b.isIssued()) {
+                b.issueTo(userId);
+                saveBooks();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean returnBook(int bookId) {
+        for (Book b : books) {
+            if (b.getId() == bookId && b.isIssued()) {
+                b.returnBook();
+                saveBooks();
+                return true;
+            }
+        }
+        return false;
     }
 
     // --- USERS ---
