@@ -20,6 +20,6 @@ This is a command-line Java application designed to manage a library system. It 
    javac *.java
 
 ## Screenshots
-![Add Student](images/screenshot1.png)
-![Add Student](images/screenshot2.png)
-![Add Student](images/screenshot3.png)
+![ss1](images/screenshot1.png)
+![ss2](images/screenshot2.png)
+![ss3](images/screenshot3.png)
