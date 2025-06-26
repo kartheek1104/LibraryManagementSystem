@@ -18,6 +18,10 @@ This is a command-line Java application designed to manage a library system. It 
 
    ```bash
    javac *.java
+3. Run the application:
+
+   ```bash
+   java Main
 
 ## Screenshots
 ![ss1](images/screenshot1.png)
