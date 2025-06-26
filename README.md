@@ -6,6 +6,7 @@ This is a command-line Java application designed to manage a library system. It 
 
 - Add, list, update, and delete books
 - Add, list, update, and delete users
+- Issue books, return books
 - Stores data in plain text files (`books.txt`, `users.txt`)
 - Automatically loads and saves data on startup and shutdown
 - Simple file-based persistence (no database required)
